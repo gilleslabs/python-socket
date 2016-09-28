@@ -17,8 +17,13 @@ while client_data != b"close":
     client_data = client_connection.recv(1024)
     # On client side use only a-Z character in order to avoid error msg
     print(client_data.decode())
-    time.sleep(10)  # Delay for reply in seconds (idle time)
-    client_connection.send(b"Data received 5/5")
+    # Uncomment below line to add latency on server side
+    #time.sleep(10)  # Delay for reply in seconds (idle time)
+    if client_data == b"Confirmed":
+       client_connection.send(b"Data received 5/5")
+    else:
+       if client_data != b"close":
+         client_connection.send(b"Please Confirm")
 
 print("Closing connection")
 client_connection.close()
