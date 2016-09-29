@@ -2,11 +2,13 @@ import socket
 import time
 
 host = "localhost" # Replace by server IP address
-port = 12800
+server_port = 12800
+local_port = 80
 
 connection_to_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-connection_to_server.connect((host, port))
-print("Connection established with server on port {}".format(port))
+connection_to_server.bind(('0.0.0.0', local_port))
+connection_to_server.connect((host, server_port))
+print("Connection established with server on server_port {}".format(server_port))
 
 # Uncomment below line to enable tcp keepalive from server side
 #connection_to_server.ioctl(socket.SIO_KEEPALIVE_VALS, (1, 10000, 3000))
